@@ -36,12 +36,13 @@ sendButton.addEventListener('click', () => {
 
         // Clear the input field
         userInput.value = '';
-
-        // Manually trigger the input event to update button visibility
         const inputEvent = new Event('input', { bubbles: true });
         userInput.dispatchEvent(inputEvent);
+        // Directly call handleInputChange to update button visibility
+        handleInputChange();
     }
 });
+
 // Hide the settings menu when the page loads
 window.addEventListener('load', () => {
     settingsMenu.style.display = "none";
@@ -53,7 +54,7 @@ window.addEventListener('load', () => {
 });
 
 // Send message when the button is clicked
-sendBtn.addEventListener('click', sendMessage);
+sendButton.addEventListener('click', sendMessage);
 
 // Send message when Enter key is pressed
 userInput.addEventListener('keypress', function (e) {
@@ -151,7 +152,6 @@ function save() {
         applyTextSize(selectedTextSize); // Apply the text size
     }
 
-    alert('Changes saved!');
 }
 
 function loadSavedColors() {
@@ -208,8 +208,6 @@ function resetToDefault() {
             button.classList.add('active');
         }
     });
-
-    alert('Colors and text size reset to default!');
 }
 
 // Function to update a CSS variable
@@ -225,12 +223,6 @@ function applyTextSize(textSizeClass) {
     chatbotMessages.classList.add(textSizeClass);
 }
 
-// Function to handle Edit Profile button click
-function editProfile() {
-    alert("Edit Profile clicked! Implement your logic here.");
-    // You can add logic to open a form or modal for editing profile details.
-}
-
 // Function to sign out (placeholder)
 function signOut() {
     console.log("Sign Out clicked!");
@@ -242,13 +234,79 @@ function toggleSection(sectionId) {
     section.style.display = section.style.display === 'none' ? 'block' : 'none';
 }
 
-// Function to edit profile
-document.getElementById('profile-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const number = document.getElementById('number').value;
-    // Update the profile information (You can add more code to save this data to a server if needed)
-    console.log('Profile updated:', { name, email, number });
-    alert('Profile updated successfully!');
+// User profile data as variables/fields
+let userProfile = {
+    name: "User's Name",
+    email: "user@example.com",
+    phone: "+123 456 7890",
+    regDate: "January 1, 2023"
+};
+
+// Function to populate the read-only profile section
+function populateReadOnlyProfile() {
+    document.getElementById('readonly-name').innerText = userProfile.name;
+    document.getElementById('readonly-email').innerText = userProfile.email;
+    document.getElementById('readonly-phone').innerText = userProfile.phone;
+    document.getElementById('readonly-regdate').innerText = userProfile.regDate;
+}
+
+// Function to populate the editable profile section
+function populateEditableProfile() {
+    document.getElementById('name').value = userProfile.name;
+    document.getElementById('email').value = userProfile.email;
+    document.getElementById('phone').value = userProfile.phone;
+    document.getElementById('editable-regdate').innerText = userProfile.regDate;
+}
+
+// Function to toggle between read-only and editable views
+function toggleEditProfile() {
+    const readonlyProfile = document.getElementById('readonly-profile');
+    const editableProfile = document.getElementById('editable-profile');
+
+    // Check if the read-only profile is currently visible
+    if (readonlyProfile.style.display !== 'none') {
+        // Hide the read-only profile and show the editable profile
+        readonlyProfile.style.display = 'none';
+        editableProfile.style.display = 'block';
+
+        // Populate the editable fields with the current data
+        populateEditableProfile();
+    } else {
+        // Hide the editable profile and show the read-only profile
+        readonlyProfile.style.display = 'block';
+        editableProfile.style.display = 'none';
+    }
+}
+
+// Function to save the updated profile
+function saveProfile(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Update the userProfile object with new values
+    userProfile.name = document.getElementById('name').value;
+    userProfile.email = document.getElementById('email').value;
+    userProfile.phone = document.getElementById('phone').value;
+
+    // Update the read-only view with the new values
+    populateReadOnlyProfile();
+
+    // Here you would typically send the data to the server to update the database
+    // Example:
+    // fetch('/update-profile', {
+    //     method: 'POST',
+    //     body: JSON.stringify(userProfile),
+    //     headers: { 'Content-Type': 'application/json' }
+    // }).then(response => response.json()).then(data => {
+    //     console.log('Profile updated successfully:', data);
+    // }).catch(error => {
+    //     console.error('Error updating profile:', error);
+    // });
+
+    // Switch back to the read-only view
+    toggleEditProfile();
+}
+
+// Initialize the read-only profile on page load
+document.addEventListener('DOMContentLoaded', () => {
+    populateReadOnlyProfile();
 });
