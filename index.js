@@ -1,10 +1,47 @@
 
 // Get DOM elements
 const userInput = document.getElementById('user-input');
-const sendBtn = document.getElementById('send-btn');
 const chatMessages = document.getElementById('chatbot-messages');
 const settingsMenu = document.getElementById('settings-menu');
+const sendButton = document.getElementById('sendButton');
+const voiceButton = document.getElementById('voiceButton');
 
+// Function to handle input changes
+const handleInputChange = () => {
+    if (userInput.value.trim() !== '') {
+        // If the input is not empty, show the Send Button and hide the Voice Button
+        sendButton.style.opacity = '1';
+        sendButton.style.pointerEvents = 'auto';
+        voiceButton.style.opacity = '0';
+        voiceButton.style.pointerEvents = 'none';
+    } else {
+        // If the input is empty, show the Voice Button and hide the Send Button
+        sendButton.style.opacity = '0';
+        sendButton.style.pointerEvents = 'none';
+        voiceButton.style.opacity = '1';
+        voiceButton.style.pointerEvents = 'auto';
+    }
+};
+
+// Add an event listener to the input field
+userInput.addEventListener('input', handleInputChange);
+
+// Add an event listener to the Send Button
+sendButton.addEventListener('click', () => {
+    const message = userInput.value.trim();
+
+    if (message) {
+        // Send the message (you can replace this with your actual send logic)
+        console.log('Message sent:', message);
+
+        // Clear the input field
+        userInput.value = '';
+
+        // Manually trigger the input event to update button visibility
+        const inputEvent = new Event('input', { bubbles: true });
+        userInput.dispatchEvent(inputEvent);
+    }
+});
 // Hide the settings menu when the page loads
 window.addEventListener('load', () => {
     settingsMenu.style.display = "none";
@@ -194,15 +231,11 @@ function editProfile() {
     // You can add logic to open a form or modal for editing profile details.
 }
 
-// Function to switch accounts (placeholder)
-function switchAccount() {
-    console.log("Switch Account clicked!");
-}
-
 // Function to sign out (placeholder)
 function signOut() {
     console.log("Sign Out clicked!");
 }
+
 // Function to toggle the visibility of sections
 function toggleSection(sectionId) {
     const section = document.getElementById(sectionId);

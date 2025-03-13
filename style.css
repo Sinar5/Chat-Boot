@@ -58,10 +58,41 @@ body {
 
 /* Chatbot Input Area */
 .chatbot-input {
-    display: flex;
+    display: block;
     border-top: 1px solid var(--header-color);
     padding: 1.25rem; /* 20px to rem */
     background-color: var(--header-color); /* Use variable */
+}
+
+.voice-button ,.send-button{
+    position: absolute;
+    bottom: 1.2rem; /* 20px to rem */
+    right: 1.2rem; /* 20px to rem */
+    width: 3rem; /* 56px to rem */
+    height: 3rem; /* 56px to rem */
+    background-color: var(--bg-color); /* Blue background */
+    border: none;
+    border-radius: 50%; /* Circular button */
+    color: var(--header-color);
+    font-size: 1.5rem; /* Icon size */
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: background-color 0.3s ease;
+    padding: 0.25rem 0.5rem;
+}
+
+#send-btn {
+    display: none;
+}
+
+/* Input Field */
+#user-input {
+    flex: 1;
+    width:78rem;
+    padding: 0.75rem; /* 12px to rem */
+    border: 0.0625rem solid var(--bg-color); /* Use variable */
+    border-radius: 0.3125rem; /* 5px to rem */
+    margin-right: 0.625rem; /* 10px to rem */
 }
 
 /* Individual Messages */
@@ -87,34 +118,10 @@ body {
     align-self: flex-start; /* Align to the left */
 }
 
-/* Input Field */
-#user-input {
-    flex: 1;
-    padding: 0.75rem; /* 12px to rem */
-    border: 0.0625rem solid var(--bg-color); /* Use variable */
-    border-radius: 0.3125rem; /* 5px to rem */
-    margin-right: 0.625rem; /* 10px to rem */
-}
-/* Send Button */
-#send-btn {
-    background-color: var(--bg-color); /* Use variable */
-    color: white;
-    border: none;
-    padding: 0.5rem 0.75rem; /* 8px 12px to rem */
-    border-radius: 0.3125rem; /* 5px to rem */
-    cursor: pointer;
-}
-
-#send-btn:hover {
-    color: var(--header-color); /* Use variable */
-}
-
 /* Full-screen hidden sections */
 .hidden-section {
     display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: fixed; 
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
@@ -122,15 +129,7 @@ body {
     color: white;
     justify-content: center;
     align-items: center;
-}
-
-/* Ensure the settings bar stays visible */
-.hidden-section {
-    position: fixed;
-    top: 0.625rem; /* 10px to rem */
-    left: 0.625rem; /* 10px to rem */
-    z-index: 1004;
-    text-align: center;
+    text-align:center;
 }
 
 /* Hide the chatbot container when hidden sections are open */
@@ -138,8 +137,15 @@ body {
     display: none;
 }
 
+.themes-content-open .profile-content-open .chatbot-container {
+    display: none;
+}
+
 /* Profile and Themes Content */
 .profile-content, .themes-content {
+    position: absolute;
+    top:28%;
+    left:30%;
     padding: 1rem;
     background-color: var(--bg-color); /* Use variable */
     border: 2px solid var(--header-color); /* Use variable */
@@ -147,20 +153,7 @@ body {
     max-width: 500px;
     width: 90%;
     text-align: center; /* Center text */
-}
-
-/* Profile Section */
-.profile-content {
-    padding: 1rem;
-    background-color: var(--bg-color); /* Use variable */
-    border: 2px solid var(--header-color); /* Use variable */
-    border-radius: 10px;
-    max-width: 500px;
-    width: 90%;
-    text-align: left; /* Align text to the left */
-    margin: 0 auto; /* Center the box horizontally */
-    position: relative; /* Reset position to relative */
-    top: 1rem; /* Adjust top position */
+    text-align: left;
 }
 
 .profile-content h3 {
