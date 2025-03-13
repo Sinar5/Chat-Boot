@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Chatbot</title>
+    <link rel="stylesheet" href="MindSpark.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> <!-- Adding Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <div class="chatbot-container">
+        <!-- Chatbot Header -->
+        <div class="chatbot-header">
+            <div class="menu-options left">
+                <button class="options-item" onclick="toggleSection('profile-section')">
+                    <i class="fas fa-user"></i> Profile
+                </button>
+                <button class="options-item" onclick="toggleSection('themes-section')">
+                    <i class="fas fa-palette"></i> Themes
+                </button>
+            </div>    
+            <h2 class="chatbot-title">MindSpark</h2>
+            <div class= "menu-options right">
+                <button class="options-item" onclick="signOut()">Sign Out</button>
+            </div>
+        </div>
+
+
+        <!-- Chatbot Messages -->
+        <div class="chatbot-messages" id="chatbot-messages">
+            <!-- Messages will appear here dynamically -->
+        </div>
+
+        <!-- Chatbot Input -->
+        <div class="chatbot-input">
+            <input type="text" id="user-input" placeholder="Type a message...">
+            <button id="sendButton" class="send-button">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+            <button id="voiceButton" class="voice-button">
+                <i class="fas fa-microphone"></i> <!-- FontAwesome microphone icon -->
+            </button>
+        </div>
+    </div>
+
+    <!-- Hidden sections for profile and themes -->
+    <div class="hidden-section" id="profile-section" style="display: none;">
+        <div>
+            <button class="close-btn" onclick="toggleSection('profile-section')">X</button>
+        </div>
+        <!-- Display user information here -->
+        <div class="profile-content">
+            <!-- Read-only Profile Section -->
+            <div id="readonly-profile">
+                <h3>Profile</h3>
+                <div class="profile-details">
+                    <div class="row">
+                        <p><strong>Name:</strong> <span id="readonly-name"></span></p>
+                        <p><strong>Email:</strong> <span id="readonly-email"></span></p>
+                    </div>
+                    <div class="row">
+                        <p><strong>Phone Number:</strong> <span id="readonly-phone"></span></p>
+                        <p><strong>Reg. Date:</strong> <span id="readonly-regdate"></span></p>
+                    </div>
+                </div>
+                <button class="edit-profile-btn" onclick="toggleEditProfile()">Edit Profile</button>
+            </div>
+        
+            <!-- Editable Profile Section -->
+            <div id="editable-profile" style="display: none;">
+                <h3>Edit Profile</h3>
+                <div class="profile-details">
+                    <form id="profile-form" onsubmit="saveProfile(event)">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required>
+                        <br>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                        <br>
+                        <label for="phone">Phone number:</label>
+                        <input type="text" id="phone" name="phone" required>
+                        <br>
+                        <p><strong>Reg. Date:</strong> <span id="editable-regdate"></span></p>
+                        <button type="submit" class="edit-profile-btn">Save Changes</button>
+                        <button type="button" class="edit-profile-btn" onclick="toggleEditProfile()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden-section" id="themes-section" style="display: none;">
+        <div>
+            <button class="close-btn" onclick="toggleSection('themes-section')">X</button>
+        </div>
+        <div class="themes-content">
+            <h3>Customize Colors</h3>
+            <div class="color-picker-row">
+                <div class="color-picker-container">
+                    <label for="bg-color-picker">Main Color:</label>
+                    <input type="color" id="bg-color-picker">
+                </div>
+                <div class="color-picker-container">
+                    <label for="header-color-picker">Accent Color:</label>
+                    <input type="color" id="header-color-picker">
+                </div>
+            </div>
+
+            <div class="button-row">
+                <button class="save-btn oval-btn" onclick="save()">Save Changes</button>
+                <button class="default-btn oval-btn" onclick="resetToDefault()">Default Theme</button>
+            </div>
+
+            <h3>Adjust Text Size</h3>
+            <div class="text-size-container">
+                <div class="text-size-sample oval-btn" onclick="applyTextSize('text-small')">Small</div>
+                <div class="text-size-sample oval-btn" onclick="applyTextSize('text-medium')">Medium</div>
+                <div class="text-size-sample oval-btn" onclick="applyTextSize('text-large')">Large</div>
+            </div>
+            
+            
+        </div>
+    </div>
+
+    <script src="MindSpark.js"></script>
+</body>
+</html>
